@@ -15,13 +15,13 @@
 
 typedef struct Encoder_Struct_t
 {
-	uint16_t _Encoder_Pin_0;
-	uint16_t _Encoder_Pin_1;
-	GPIO_TypeDef* _Encoder_Pin_0_Port;
-	GPIO_TypeDef* _Encoder_Pin_1_Port;
-	uint8_t _Encoder_Pin_0__State;
-	uint8_t _Encoder_Pin_1__State;
-	uint32_t _Encoder_Time_Stamp;
+	uint16_t Encoder_Pin_0;
+	uint16_t Encoder_Pin_1;
+	GPIO_TypeDef* Encoder_Pin_0_Port;
+	GPIO_TypeDef* Encoder_Pin_1_Port;
+	uint8_t Encoder_Pin_0__State;
+	uint8_t Encoder_Pin_1__State;
+	uint32_t Encoder_Time_Stamp;
 	int16_t Encoder_Count;
 
 } Encoder_Struct_t;
@@ -39,16 +39,16 @@ void Encoder_Scan()
 
 	for (uint8_t Index = 0; Index < Attached_Encoders; Index++)
 	{
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_0_Port,
-				Encoder_Array[Index]._Encoder_Pin_0)
-				!= Encoder_Array[Index]._Encoder_Pin_0__State)
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_0_Port,
+				Encoder_Array[Index].Encoder_Pin_0)
+				!= Encoder_Array[Index].Encoder_Pin_0__State)
 		{
-			Encoder_Array[Index]._Encoder_Pin_0__State =
-					!Encoder_Array[Index]._Encoder_Pin_0__State;
-			if (Encoder_Array[Index]._Encoder_Pin_0__State
-					&& !Encoder_Array[Index]._Encoder_Pin_1__State)
+			Encoder_Array[Index].Encoder_Pin_0__State =
+					!Encoder_Array[Index].Encoder_Pin_0__State;
+			if (Encoder_Array[Index].Encoder_Pin_0__State
+					&& !Encoder_Array[Index].Encoder_Pin_1__State)
 			{
-				if (HAL_GetTick() - Encoder_Array[Index]._Encoder_Time_Stamp
+				if (HAL_GetTick() - Encoder_Array[Index].Encoder_Time_Stamp
 						> 3)
 				{
 					Encoder_Array[Index].Encoder_Count += 1;
@@ -58,19 +58,19 @@ void Encoder_Scan()
 					Encoder_Array[Index].Encoder_Count += 5;
 				}
 
-				Encoder_Array[Index]._Encoder_Time_Stamp = HAL_GetTick();
+				Encoder_Array[Index].Encoder_Time_Stamp = HAL_GetTick();
 			}
 		}
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_1_Port,
-				Encoder_Array[Index]._Encoder_Pin_1)
-				!= Encoder_Array[Index]._Encoder_Pin_1__State)
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_1_Port,
+				Encoder_Array[Index].Encoder_Pin_1)
+				!= Encoder_Array[Index].Encoder_Pin_1__State)
 		{
-			Encoder_Array[Index]._Encoder_Pin_1__State =
-					!Encoder_Array[Index]._Encoder_Pin_1__State;
-			if (Encoder_Array[Index]._Encoder_Pin_1__State
-					&& !Encoder_Array[Index]._Encoder_Pin_0__State)
+			Encoder_Array[Index].Encoder_Pin_1__State =
+					!Encoder_Array[Index].Encoder_Pin_1__State;
+			if (Encoder_Array[Index].Encoder_Pin_1__State
+					&& !Encoder_Array[Index].Encoder_Pin_0__State)
 			{
-				if (HAL_GetTick() - Encoder_Array[Index]._Encoder_Time_Stamp
+				if (HAL_GetTick() - Encoder_Array[Index].Encoder_Time_Stamp
 						> 3)
 				{
 					Encoder_Array[Index].Encoder_Count -= 1;
@@ -79,15 +79,15 @@ void Encoder_Scan()
 				{
 					Encoder_Array[Index].Encoder_Count -= 5;
 				}
-				Encoder_Array[Index]._Encoder_Time_Stamp = HAL_GetTick();
+				Encoder_Array[Index].Encoder_Time_Stamp = HAL_GetTick();
 			}
 		}
 	}
 
 }
 
-uint8_t Encoder_Attach(uint16_t Button_Pin_0, GPIO_TypeDef* Button_Pin_0_Port,
-		uint16_t Button_Pin_1, GPIO_TypeDef* Button_Pin_1_Port)
+uint8_t Encoder_Attach(uint16_t _Encoder_Pin_0, GPIO_TypeDef* _Encoder_Pin_0_Port,
+		uint16_t _Encoder_Pin_1, GPIO_TypeDef* _Encoder_Pin_1_Port)
 {
 	//init GPIOs as input
 
@@ -103,27 +103,27 @@ uint8_t Encoder_Attach(uint16_t Button_Pin_0, GPIO_TypeDef* Button_Pin_0_Port,
 	__HAL_RCC_GPIOB_CLK_ENABLE()
 	;
 
-	GPIO_InitStruct.Pin = Button_Pin_0;
+	GPIO_InitStruct.Pin = _Encoder_Pin_0;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(Button_Pin_0_Port, &GPIO_InitStruct);
+	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
 
-	GPIO_InitStruct.Pin = Button_Pin_1;
-	HAL_GPIO_Init(Button_Pin_1_Port, &GPIO_InitStruct);
+	GPIO_InitStruct.Pin = _Encoder_Pin_1;
+	HAL_GPIO_Init(_Encoder_Pin_1_Port, &GPIO_InitStruct);
 
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1 = Button_Pin_1;
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0_Port = Button_Pin_0_Port;
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1_Port = Button_Pin_1_Port;
-	Encoder_Array[Attached_Encoders]._Encoder_Time_Stamp = 0;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1 = _Encoder_Pin_1;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port = _Encoder_Pin_0_Port;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port = _Encoder_Pin_1_Port;
+	Encoder_Array[Attached_Encoders].Encoder_Time_Stamp = 0;
 
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0__State = HAL_GPIO_ReadPin(
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_0_Port,
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_0);
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
+			Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port,
+			Encoder_Array[Attached_Encoders].Encoder_Pin_0);
 
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1__State = HAL_GPIO_ReadPin(
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_1_Port,
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_1);
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1__State = HAL_GPIO_ReadPin(
+			Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port,
+			Encoder_Array[Attached_Encoders].Encoder_Pin_1);
 
 
 	Attached_Encoders++;
