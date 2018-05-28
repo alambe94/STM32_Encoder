@@ -27,12 +27,60 @@ typedef struct Encoder_Struct_t
 } Encoder_Struct_t;
 
 static Encoder_Struct_t Encoder_Array[MAX_ENCODERS];
+
 static uint8_t Attached_Encoders = 0;
 
-void Encoder_Init()
+
+uint8_t Encoder_Attach(uint16_t _Encoder_Pin_0, GPIO_TypeDef* _Encoder_Pin_0_Port,
+		uint16_t _Encoder_Pin_1, GPIO_TypeDef* _Encoder_Pin_1_Port)
 {
-	//init GPIOs
+	//init GPIOs as input
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOC_CLK_ENABLE()
+	;
+	__HAL_RCC_GPIOD_CLK_ENABLE()
+	;
+	__HAL_RCC_GPIOA_CLK_ENABLE()
+	;
+	__HAL_RCC_GPIOB_CLK_ENABLE()
+	;
+
+	GPIO_InitStruct.Pin = _Encoder_Pin_0;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
+
+	GPIO_InitStruct.Pin = _Encoder_Pin_1;
+	HAL_GPIO_Init(_Encoder_Pin_1_Port, &GPIO_InitStruct);
+
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1 = _Encoder_Pin_1;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port = _Encoder_Pin_0_Port;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port = _Encoder_Pin_1_Port;
+	Encoder_Array[Attached_Encoders].Encoder_Time_Stamp = 0;
+
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
+			Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port,
+			Encoder_Array[Attached_Encoders].Encoder_Pin_0);
+
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1__State = HAL_GPIO_ReadPin(
+			Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port,
+			Encoder_Array[Attached_Encoders].Encoder_Pin_1);
+
+
+	Attached_Encoders++;
+
+	if (Attached_Encoders > MAX_ENCODERS)
+	{
+		_Error_Handler(__FILE__, __LINE__);
+		//Error
+	}
+	return (Attached_Encoders - 1);//return encoder ID
 }
+
 
 void Encoder_Scan()
 {
@@ -86,56 +134,8 @@ void Encoder_Scan()
 
 }
 
-uint8_t Encoder_Attach(uint16_t _Encoder_Pin_0, GPIO_TypeDef* _Encoder_Pin_0_Port,
-		uint16_t _Encoder_Pin_1, GPIO_TypeDef* _Encoder_Pin_1_Port)
-{
-	//init GPIOs as input
 
-	GPIO_InitTypeDef GPIO_InitStruct;
-
-	/* GPIO Ports Clock Enable */
-	__HAL_RCC_GPIOC_CLK_ENABLE()
-	;
-	__HAL_RCC_GPIOD_CLK_ENABLE()
-	;
-	__HAL_RCC_GPIOA_CLK_ENABLE()
-	;
-	__HAL_RCC_GPIOB_CLK_ENABLE()
-	;
-
-	GPIO_InitStruct.Pin = _Encoder_Pin_0;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
-
-	GPIO_InitStruct.Pin = _Encoder_Pin_1;
-	HAL_GPIO_Init(_Encoder_Pin_1_Port, &GPIO_InitStruct);
-
-	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
-	Encoder_Array[Attached_Encoders].Encoder_Pin_1 = _Encoder_Pin_1;
-	Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port = _Encoder_Pin_0_Port;
-	Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port = _Encoder_Pin_1_Port;
-	Encoder_Array[Attached_Encoders].Encoder_Time_Stamp = 0;
-
-	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
-			Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port,
-			Encoder_Array[Attached_Encoders].Encoder_Pin_0);
-
-	Encoder_Array[Attached_Encoders].Encoder_Pin_1__State = HAL_GPIO_ReadPin(
-			Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port,
-			Encoder_Array[Attached_Encoders].Encoder_Pin_1);
-
-
-	Attached_Encoders++;
-	if (Attached_Encoders > MAX_ENCODERS)
-	{
-		_Error_Handler(__FILE__, __LINE__);
-		//Error
-	}
-	return (Attached_Encoders - 1);
-}
-
-int16_t Encoder_Get_Count(uint8_t Encoder)
+int16_t Encoder_Get_Count(Encoder_t Encoder)
 {
 	if (Encoder > Attached_Encoders)
 	{
@@ -144,7 +144,7 @@ int16_t Encoder_Get_Count(uint8_t Encoder)
 	}
 	return Encoder_Array[Encoder].Encoder_Count;
 }
-void Encoder_Reset_Count(uint8_t Encoder)
+void Encoder_Reset_Count(Encoder_t Encoder)
 {
 	if (Encoder > Attached_Encoders)
 	{

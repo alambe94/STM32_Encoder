@@ -50,9 +50,11 @@
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
-uint8_t MY_Encoder_X, MY_Encoder_Y;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+
+Encoder_t MY_Encoder_X;
+Encoder_t MY_Encoder_Y;
 
 /* USER CODE END PV */
 
@@ -105,7 +107,7 @@ int main(void)
 
     MY_Encoder_Y = Encoder_Attach(GPIO_PIN_0, GPIOB, GPIO_PIN_1, GPIOB);
 
-	MY_Encoder_X = Encoder_Attach(GPIO_PIN_0, GPIOB, GPIO_PIN_1, GPIOB);
+	MY_Encoder_X = Encoder_Attach(GPIO_PIN_8, GPIOB, GPIO_PIN_3, GPIOB);
 
 	ssd1306_Init();
 

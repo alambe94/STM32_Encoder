@@ -13,6 +13,7 @@
 #define HIGH 1
 #define LOW  0
 
+typedef uint8_t Encoder_t;
 
 typedef enum Enoder_State_t
 {

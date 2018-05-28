@@ -21,23 +21,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   8 .ARM.attributes 00000029  00000000  00000000  00020014  2**0
                   CONTENTS, READONLY
-  9 .debug_info   0000fda7  00000000  00000000  0002003d  2**0
+  9 .debug_info   0000fdae  00000000  00000000  0002003d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 00002370  00000000  00000000  0002fde4  2**0
+ 10 .debug_abbrev 0000235a  00000000  00000000  0002fdeb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00003e23  00000000  00000000  00032154  2**0
+ 11 .debug_loc    00003e23  00000000  00000000  00032145  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_aranges 000005b8  00000000  00000000  00035f78  2**3
+ 12 .debug_aranges 000005b0  00000000  00000000  00035f68  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000958  00000000  00000000  00036530  2**3
+ 13 .debug_ranges 00000950  00000000  00000000  00036518  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   000046ca  00000000  00000000  00036e88  2**0
+ 14 .debug_line   000046ce  00000000  00000000  00036e68  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    000024a5  00000000  00000000  0003b552  2**0
+ 15 .debug_str    00002461  00000000  00000000  0003b536  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .comment      0000007c  00000000  00000000  0003d9f7  2**0
+ 16 .comment      0000007c  00000000  00000000  0003d997  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  00000f98  00000000  00000000  0003da74  2**2
+ 17 .debug_frame  00000f88  00000000  00000000  0003da14  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -2298,7 +2298,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 void HAL_SYSTICK_Callback()
 {
 	Encoder_Scan();
- 8000ed4:	f000 b8a2 	b.w	800101c <Encoder_Scan>
+ 8000ed4:	f000 b916 	b.w	8001104 <Encoder_Scan>
 
 08000ed8 <SystemClock_Config>:
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
@@ -2414,84 +2414,83 @@ void HAL_SYSTICK_Callback()
  8000f5c:	2202      	movs	r2, #2
  8000f5e:	4619      	mov	r1, r3
  8000f60:	2001      	movs	r0, #1
- 8000f62:	f000 f8b3 	bl	80010cc <Encoder_Attach>
+ 8000f62:	f000 f85b 	bl	800101c <Encoder_Attach>
  8000f66:	4d27      	ldr	r5, [pc, #156]	; (8001004 <main+0xbc>)
-	MY_Encoder_X = Encoder_Attach(GPIO_PIN_0, GPIOB, GPIO_PIN_1, GPIOB);
+	MY_Encoder_X = Encoder_Attach(GPIO_PIN_8, GPIOB, GPIO_PIN_3, GPIOB);
  8000f68:	4b25      	ldr	r3, [pc, #148]	; (8001000 <main+0xb8>)
- 8000f6a:	2202      	movs	r2, #2
+ 8000f6a:	2208      	movs	r2, #8
  8000f6c:	4619      	mov	r1, r3
     MY_Encoder_Y = Encoder_Attach(GPIO_PIN_0, GPIOB, GPIO_PIN_1, GPIOB);
  8000f6e:	7028      	strb	r0, [r5, #0]
-	MY_Encoder_X = Encoder_Attach(GPIO_PIN_0, GPIOB, GPIO_PIN_1, GPIOB);
- 8000f70:	2001      	movs	r0, #1
- 8000f72:	f000 f8ab 	bl	80010cc <Encoder_Attach>
- 8000f76:	4e24      	ldr	r6, [pc, #144]	; (8001008 <main+0xc0>)
- 8000f78:	7030      	strb	r0, [r6, #0]
+	MY_Encoder_X = Encoder_Attach(GPIO_PIN_8, GPIOB, GPIO_PIN_3, GPIOB);
+ 8000f70:	f44f 7080 	mov.w	r0, #256	; 0x100
+ 8000f74:	f000 f852 	bl	800101c <Encoder_Attach>
+ 8000f78:	4e23      	ldr	r6, [pc, #140]	; (8001008 <main+0xc0>)
+ 8000f7a:	7030      	strb	r0, [r6, #0]
 	ssd1306_Init();
- 8000f7a:	f000 f989 	bl	8001290 <ssd1306_Init>
+ 8000f7c:	f000 f988 	bl	8001290 <ssd1306_Init>
 	ssd1306_Fill(Black);
- 8000f7e:	2000      	movs	r0, #0
- 8000f80:	f000 f94a 	bl	8001218 <ssd1306_Fill>
+ 8000f80:	2000      	movs	r0, #0
+ 8000f82:	f000 f949 	bl	8001218 <ssd1306_Fill>
 	ssd1306_SetCursor(0, 0);
- 8000f84:	2100      	movs	r1, #0
- 8000f86:	4608      	mov	r0, r1
- 8000f88:	f000 fa6c 	bl	8001464 <ssd1306_SetCursor>
+ 8000f86:	2100      	movs	r1, #0
+ 8000f88:	4608      	mov	r0, r1
+ 8000f8a:	f000 fa6b 	bl	8001464 <ssd1306_SetCursor>
 	ssd1306_UpdateScreen();
- 8000f8c:	f000 f952 	bl	8001234 <ssd1306_UpdateScreen>
+ 8000f8e:	f000 f951 	bl	8001234 <ssd1306_UpdateScreen>
 		temp1 = Encoder_Get_Count(MY_Encoder_X);
- 8000f90:	7830      	ldrb	r0, [r6, #0]
- 8000f92:	f000 f90f 	bl	80011b4 <Encoder_Get_Count>
- 8000f96:	4604      	mov	r4, r0
+ 8000f92:	7830      	ldrb	r0, [r6, #0]
+ 8000f94:	f000 f90e 	bl	80011b4 <Encoder_Get_Count>
+ 8000f98:	4604      	mov	r4, r0
 		temp2 = Encoder_Get_Count(MY_Encoder_Y);
- 8000f98:	7828      	ldrb	r0, [r5, #0]
- 8000f9a:	f000 f90b 	bl	80011b4 <Encoder_Get_Count>
- 8000f9e:	4607      	mov	r7, r0
+ 8000f9a:	7828      	ldrb	r0, [r5, #0]
+ 8000f9c:	f000 f90a 	bl	80011b4 <Encoder_Get_Count>
+ 8000fa0:	4607      	mov	r7, r0
 		ssd1306_Fill(Black);
- 8000fa0:	2000      	movs	r0, #0
- 8000fa2:	f000 f939 	bl	8001218 <ssd1306_Fill>
+ 8000fa2:	2000      	movs	r0, #0
+ 8000fa4:	f000 f938 	bl	8001218 <ssd1306_Fill>
 		ssd1306_SetCursor(0, 0);
- 8000fa6:	2100      	movs	r1, #0
- 8000fa8:	4608      	mov	r0, r1
- 8000faa:	f000 fa5b 	bl	8001464 <ssd1306_SetCursor>
+ 8000fa8:	2100      	movs	r1, #0
+ 8000faa:	4608      	mov	r0, r1
+ 8000fac:	f000 fa5a 	bl	8001464 <ssd1306_SetCursor>
 		itoa(temp1, temp, 10);
- 8000fae:	4620      	mov	r0, r4
+ 8000fb0:	4620      	mov	r0, r4
 		ssd1306_WriteString("ER_X:", Font_11x18, White);
- 8000fb0:	4c16      	ldr	r4, [pc, #88]	; (800100c <main+0xc4>)
+ 8000fb2:	4c16      	ldr	r4, [pc, #88]	; (800100c <main+0xc4>)
 		itoa(temp1, temp, 10);
- 8000fb2:	4669      	mov	r1, sp
- 8000fb4:	220a      	movs	r2, #10
- 8000fb6:	f000 fb39 	bl	800162c <itoa>
+ 8000fb4:	4669      	mov	r1, sp
+ 8000fb6:	220a      	movs	r2, #10
+ 8000fb8:	f000 fb38 	bl	800162c <itoa>
 		ssd1306_WriteString("ER_X:", Font_11x18, White);
- 8000fba:	e894 0006 	ldmia.w	r4, {r1, r2}
- 8000fbe:	2301      	movs	r3, #1
- 8000fc0:	4813      	ldr	r0, [pc, #76]	; (8001010 <main+0xc8>)
- 8000fc2:	f000 fa39 	bl	8001438 <ssd1306_WriteString>
+ 8000fbc:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 8000fc0:	2301      	movs	r3, #1
+ 8000fc2:	4813      	ldr	r0, [pc, #76]	; (8001010 <main+0xc8>)
+ 8000fc4:	f000 fa38 	bl	8001438 <ssd1306_WriteString>
 		ssd1306_WriteString(temp, Font_11x18, White);
- 8000fc6:	e894 0006 	ldmia.w	r4, {r1, r2}
- 8000fca:	2301      	movs	r3, #1
- 8000fcc:	4668      	mov	r0, sp
- 8000fce:	f000 fa33 	bl	8001438 <ssd1306_WriteString>
+ 8000fc8:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 8000fcc:	2301      	movs	r3, #1
+ 8000fce:	4668      	mov	r0, sp
+ 8000fd0:	f000 fa32 	bl	8001438 <ssd1306_WriteString>
 		itoa(temp2, temp, 10);
- 8000fd2:	220a      	movs	r2, #10
- 8000fd4:	4669      	mov	r1, sp
- 8000fd6:	4638      	mov	r0, r7
- 8000fd8:	f000 fb28 	bl	800162c <itoa>
+ 8000fd4:	220a      	movs	r2, #10
+ 8000fd6:	4669      	mov	r1, sp
+ 8000fd8:	4638      	mov	r0, r7
+ 8000fda:	f000 fb27 	bl	800162c <itoa>
 		ssd1306_SetCursor(0, 30);
- 8000fdc:	211e      	movs	r1, #30
- 8000fde:	2000      	movs	r0, #0
- 8000fe0:	f000 fa40 	bl	8001464 <ssd1306_SetCursor>
+ 8000fde:	211e      	movs	r1, #30
+ 8000fe0:	2000      	movs	r0, #0
+ 8000fe2:	f000 fa3f 	bl	8001464 <ssd1306_SetCursor>
 		ssd1306_WriteString("ER_Y:", Font_11x18, White);
- 8000fe4:	e894 0006 	ldmia.w	r4, {r1, r2}
- 8000fe8:	2301      	movs	r3, #1
- 8000fea:	480a      	ldr	r0, [pc, #40]	; (8001014 <main+0xcc>)
- 8000fec:	f000 fa24 	bl	8001438 <ssd1306_WriteString>
+ 8000fe6:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 8000fea:	2301      	movs	r3, #1
+ 8000fec:	4809      	ldr	r0, [pc, #36]	; (8001014 <main+0xcc>)
+ 8000fee:	f000 fa23 	bl	8001438 <ssd1306_WriteString>
 		ssd1306_WriteString(temp, Font_11x18, White);
- 8000ff0:	e894 0006 	ldmia.w	r4, {r1, r2}
- 8000ff4:	2301      	movs	r3, #1
- 8000ff6:	4668      	mov	r0, sp
- 8000ff8:	f000 fa1e 	bl	8001438 <ssd1306_WriteString>
- 8000ffc:	e7c6      	b.n	8000f8c <main+0x44>
- 8000ffe:	bf00      	nop
+ 8000ff2:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 8000ff6:	2301      	movs	r3, #1
+ 8000ff8:	4668      	mov	r0, sp
+ 8000ffa:	f000 fa1d 	bl	8001438 <ssd1306_WriteString>
+ 8000ffe:	e7c6      	b.n	8000f8e <main+0x46>
  8001000:	40010c00 	.word	0x40010c00
  8001004:	200004dc 	.word	0x200004dc
  8001008:	200004dd 	.word	0x200004dd
@@ -2509,297 +2508,299 @@ void _Error_Handler(char *file, int line)
  8001018:	e7fe      	b.n	8001018 <_Error_Handler>
 	...
 
-0800101c <Encoder_Scan>:
+0800101c <Encoder_Attach>:
+static uint8_t Attached_Encoders = 0;
+
+
+uint8_t Encoder_Attach(uint16_t _Encoder_Pin_0, GPIO_TypeDef* _Encoder_Pin_0_Port,
+		uint16_t _Encoder_Pin_1, GPIO_TypeDef* _Encoder_Pin_1_Port)
 {
-	//init GPIOs
-}
-
-void Encoder_Scan()
-{
- 800101c:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-
-	for (uint8_t Index = 0; Index < Attached_Encoders; Index++)
- 8001020:	2700      	movs	r7, #0
- 8001022:	f8df 80a4 	ldr.w	r8, [pc, #164]	; 80010c8 <Encoder_Scan+0xac>
-	{
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_0_Port,
- 8001026:	4e27      	ldr	r6, [pc, #156]	; (80010c4 <Encoder_Scan+0xa8>)
-	for (uint8_t Index = 0; Index < Attached_Encoders; Index++)
- 8001028:	f898 3000 	ldrb.w	r3, [r8]
- 800102c:	b2fd      	uxtb	r5, r7
- 800102e:	42ab      	cmp	r3, r5
- 8001030:	d801      	bhi.n	8001036 <Encoder_Scan+0x1a>
-				Encoder_Array[Index]._Encoder_Time_Stamp = HAL_GetTick();
-			}
-		}
-	}
-
-}
- 8001032:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_0_Port,
- 8001036:	2318      	movs	r3, #24
- 8001038:	436b      	muls	r3, r5
- 800103a:	18f4      	adds	r4, r6, r3
- 800103c:	5af1      	ldrh	r1, [r6, r3]
- 800103e:	6860      	ldr	r0, [r4, #4]
- 8001040:	f7ff fa18 	bl	8000474 <HAL_GPIO_ReadPin>
-				!= Encoder_Array[Index]._Encoder_Pin_0__State)
- 8001044:	7b23      	ldrb	r3, [r4, #12]
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_0_Port,
- 8001046:	4298      	cmp	r0, r3
- 8001048:	d017      	beq.n	800107a <Encoder_Scan+0x5e>
-					!Encoder_Array[Index]._Encoder_Pin_0__State;
- 800104a:	2b00      	cmp	r3, #0
- 800104c:	bf0c      	ite	eq
- 800104e:	2301      	moveq	r3, #1
- 8001050:	2300      	movne	r3, #0
- 8001052:	7323      	strb	r3, [r4, #12]
-			if (Encoder_Array[Index]._Encoder_Pin_0__State
- 8001054:	d111      	bne.n	800107a <Encoder_Scan+0x5e>
-					&& !Encoder_Array[Index]._Encoder_Pin_1__State)
- 8001056:	7b63      	ldrb	r3, [r4, #13]
- 8001058:	b97b      	cbnz	r3, 800107a <Encoder_Scan+0x5e>
-				if (HAL_GetTick() - Encoder_Array[Index]._Encoder_Time_Stamp
- 800105a:	f7ff f8b9 	bl	80001d0 <HAL_GetTick>
- 800105e:	6923      	ldr	r3, [r4, #16]
- 8001060:	1ac0      	subs	r0, r0, r3
-					Encoder_Array[Index].Encoder_Count += 1;
- 8001062:	8aa3      	ldrh	r3, [r4, #20]
-				if (HAL_GetTick() - Encoder_Array[Index]._Encoder_Time_Stamp
- 8001064:	2803      	cmp	r0, #3
-					Encoder_Array[Index].Encoder_Count += 1;
- 8001066:	bf8c      	ite	hi
- 8001068:	3301      	addhi	r3, #1
-					Encoder_Array[Index].Encoder_Count += 5;
- 800106a:	3305      	addls	r3, #5
- 800106c:	82a3      	strh	r3, [r4, #20]
-				Encoder_Array[Index]._Encoder_Time_Stamp = HAL_GetTick();
- 800106e:	f7ff f8af 	bl	80001d0 <HAL_GetTick>
- 8001072:	2318      	movs	r3, #24
- 8001074:	fb03 6305 	mla	r3, r3, r5, r6
- 8001078:	6118      	str	r0, [r3, #16]
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_1_Port,
- 800107a:	2418      	movs	r4, #24
- 800107c:	fb04 6405 	mla	r4, r4, r5, r6
- 8001080:	8861      	ldrh	r1, [r4, #2]
- 8001082:	68a0      	ldr	r0, [r4, #8]
- 8001084:	f7ff f9f6 	bl	8000474 <HAL_GPIO_ReadPin>
-				!= Encoder_Array[Index]._Encoder_Pin_1__State)
- 8001088:	7b63      	ldrb	r3, [r4, #13]
-		if (HAL_GPIO_ReadPin(Encoder_Array[Index]._Encoder_Pin_1_Port,
- 800108a:	4298      	cmp	r0, r3
- 800108c:	d018      	beq.n	80010c0 <Encoder_Scan+0xa4>
-					!Encoder_Array[Index]._Encoder_Pin_1__State;
- 800108e:	2b00      	cmp	r3, #0
- 8001090:	bf0c      	ite	eq
- 8001092:	2301      	moveq	r3, #1
- 8001094:	2300      	movne	r3, #0
- 8001096:	7363      	strb	r3, [r4, #13]
-			if (Encoder_Array[Index]._Encoder_Pin_1__State
- 8001098:	d112      	bne.n	80010c0 <Encoder_Scan+0xa4>
-					&& !Encoder_Array[Index]._Encoder_Pin_0__State)
- 800109a:	7b23      	ldrb	r3, [r4, #12]
- 800109c:	b983      	cbnz	r3, 80010c0 <Encoder_Scan+0xa4>
-				if (HAL_GetTick() - Encoder_Array[Index]._Encoder_Time_Stamp
- 800109e:	f7ff f897 	bl	80001d0 <HAL_GetTick>
- 80010a2:	6923      	ldr	r3, [r4, #16]
- 80010a4:	1ac0      	subs	r0, r0, r3
-					Encoder_Array[Index].Encoder_Count -= 1;
- 80010a6:	8aa3      	ldrh	r3, [r4, #20]
-				if (HAL_GetTick() - Encoder_Array[Index]._Encoder_Time_Stamp
- 80010a8:	2803      	cmp	r0, #3
-					Encoder_Array[Index].Encoder_Count -= 1;
- 80010aa:	bf8c      	ite	hi
- 80010ac:	f103 33ff 	addhi.w	r3, r3, #4294967295	; 0xffffffff
-					Encoder_Array[Index].Encoder_Count -= 5;
- 80010b0:	3b05      	subls	r3, #5
- 80010b2:	82a3      	strh	r3, [r4, #20]
-				Encoder_Array[Index]._Encoder_Time_Stamp = HAL_GetTick();
- 80010b4:	f7ff f88c 	bl	80001d0 <HAL_GetTick>
- 80010b8:	2318      	movs	r3, #24
- 80010ba:	fb03 6505 	mla	r5, r3, r5, r6
- 80010be:	6128      	str	r0, [r5, #16]
- 80010c0:	3701      	adds	r7, #1
- 80010c2:	e7b1      	b.n	8001028 <Encoder_Scan+0xc>
- 80010c4:	20000034 	.word	0x20000034
- 80010c8:	20000030 	.word	0x20000030
-
-080010cc <Encoder_Attach>:
-
-uint8_t Encoder_Attach(uint16_t Button_Pin_0, GPIO_TypeDef* Button_Pin_0_Port,
-		uint16_t Button_Pin_1, GPIO_TypeDef* Button_Pin_1_Port)
-{
- 80010cc:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
- 80010d0:	4698      	mov	r8, r3
+ 800101c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 8001020:	4698      	mov	r8, r3
 	//init GPIOs as input
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	/* GPIO Ports Clock Enable */
 	__HAL_RCC_GPIOC_CLK_ENABLE()
- 80010d2:	4b34      	ldr	r3, [pc, #208]	; (80011a4 <Encoder_Attach+0xd8>)
+ 8001022:	4b34      	ldr	r3, [pc, #208]	; (80010f4 <Encoder_Attach+0xd8>)
 {
- 80010d4:	4691      	mov	r9, r2
+ 8001024:	4691      	mov	r9, r2
 	__HAL_RCC_GPIOC_CLK_ENABLE()
- 80010d6:	699a      	ldr	r2, [r3, #24]
+ 8001026:	699a      	ldr	r2, [r3, #24]
 {
- 80010d8:	b08b      	sub	sp, #44	; 0x2c
+ 8001028:	b08b      	sub	sp, #44	; 0x2c
 	__HAL_RCC_GPIOC_CLK_ENABLE()
- 80010da:	f042 0210 	orr.w	r2, r2, #16
- 80010de:	619a      	str	r2, [r3, #24]
- 80010e0:	699a      	ldr	r2, [r3, #24]
+ 800102a:	f042 0210 	orr.w	r2, r2, #16
+ 800102e:	619a      	str	r2, [r3, #24]
+ 8001030:	699a      	ldr	r2, [r3, #24]
 {
- 80010e2:	460f      	mov	r7, r1
+ 8001032:	460f      	mov	r7, r1
 	__HAL_RCC_GPIOC_CLK_ENABLE()
- 80010e4:	f002 0210 	and.w	r2, r2, #16
- 80010e8:	9202      	str	r2, [sp, #8]
- 80010ea:	9a02      	ldr	r2, [sp, #8]
+ 8001034:	f002 0210 	and.w	r2, r2, #16
+ 8001038:	9202      	str	r2, [sp, #8]
+ 800103a:	9a02      	ldr	r2, [sp, #8]
 	;
 	__HAL_RCC_GPIOD_CLK_ENABLE()
- 80010ec:	699a      	ldr	r2, [r3, #24]
-	HAL_GPIO_Init(Button_Pin_0_Port, &GPIO_InitStruct);
+ 800103c:	699a      	ldr	r2, [r3, #24]
+	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
 
-	GPIO_InitStruct.Pin = Button_Pin_1;
-	HAL_GPIO_Init(Button_Pin_1_Port, &GPIO_InitStruct);
+	GPIO_InitStruct.Pin = _Encoder_Pin_1;
+	HAL_GPIO_Init(_Encoder_Pin_1_Port, &GPIO_InitStruct);
 
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
- 80010ee:	f04f 0b18 	mov.w	fp, #24
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+ 800103e:	f04f 0b18 	mov.w	fp, #24
 	__HAL_RCC_GPIOD_CLK_ENABLE()
- 80010f2:	f042 0220 	orr.w	r2, r2, #32
- 80010f6:	619a      	str	r2, [r3, #24]
- 80010f8:	699a      	ldr	r2, [r3, #24]
+ 8001042:	f042 0220 	orr.w	r2, r2, #32
+ 8001046:	619a      	str	r2, [r3, #24]
+ 8001048:	699a      	ldr	r2, [r3, #24]
 {
- 80010fa:	4605      	mov	r5, r0
+ 800104a:	4605      	mov	r5, r0
 	__HAL_RCC_GPIOD_CLK_ENABLE()
- 80010fc:	f002 0220 	and.w	r2, r2, #32
- 8001100:	9203      	str	r2, [sp, #12]
- 8001102:	9a03      	ldr	r2, [sp, #12]
+ 800104c:	f002 0220 	and.w	r2, r2, #32
+ 8001050:	9203      	str	r2, [sp, #12]
+ 8001052:	9a03      	ldr	r2, [sp, #12]
 	__HAL_RCC_GPIOA_CLK_ENABLE()
- 8001104:	699a      	ldr	r2, [r3, #24]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
- 8001106:	4c28      	ldr	r4, [pc, #160]	; (80011a8 <Encoder_Attach+0xdc>)
+ 8001054:	699a      	ldr	r2, [r3, #24]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+ 8001056:	4c28      	ldr	r4, [pc, #160]	; (80010f8 <Encoder_Attach+0xdc>)
 	__HAL_RCC_GPIOA_CLK_ENABLE()
- 8001108:	f042 0204 	orr.w	r2, r2, #4
- 800110c:	619a      	str	r2, [r3, #24]
- 800110e:	699a      	ldr	r2, [r3, #24]
-	HAL_GPIO_Init(Button_Pin_0_Port, &GPIO_InitStruct);
- 8001110:	a906      	add	r1, sp, #24
+ 8001058:	f042 0204 	orr.w	r2, r2, #4
+ 800105c:	619a      	str	r2, [r3, #24]
+ 800105e:	699a      	ldr	r2, [r3, #24]
+	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
+ 8001060:	a906      	add	r1, sp, #24
 	__HAL_RCC_GPIOA_CLK_ENABLE()
- 8001112:	f002 0204 	and.w	r2, r2, #4
- 8001116:	9204      	str	r2, [sp, #16]
- 8001118:	9a04      	ldr	r2, [sp, #16]
+ 8001062:	f002 0204 	and.w	r2, r2, #4
+ 8001066:	9204      	str	r2, [sp, #16]
+ 8001068:	9a04      	ldr	r2, [sp, #16]
 	__HAL_RCC_GPIOB_CLK_ENABLE()
- 800111a:	699a      	ldr	r2, [r3, #24]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
- 800111c:	f8df a090 	ldr.w	sl, [pc, #144]	; 80011b0 <Encoder_Attach+0xe4>
+ 800106a:	699a      	ldr	r2, [r3, #24]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+ 800106c:	f8df a090 	ldr.w	sl, [pc, #144]	; 8001100 <Encoder_Attach+0xe4>
 	__HAL_RCC_GPIOB_CLK_ENABLE()
- 8001120:	f042 0208 	orr.w	r2, r2, #8
- 8001124:	619a      	str	r2, [r3, #24]
- 8001126:	699b      	ldr	r3, [r3, #24]
+ 8001070:	f042 0208 	orr.w	r2, r2, #8
+ 8001074:	619a      	str	r2, [r3, #24]
+ 8001076:	699b      	ldr	r3, [r3, #24]
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
- 8001128:	2200      	movs	r2, #0
+ 8001078:	2200      	movs	r2, #0
 	__HAL_RCC_GPIOB_CLK_ENABLE()
- 800112a:	f003 0308 	and.w	r3, r3, #8
- 800112e:	9305      	str	r3, [sp, #20]
- 8001130:	9b05      	ldr	r3, [sp, #20]
+ 800107a:	f003 0308 	and.w	r3, r3, #8
+ 800107e:	9305      	str	r3, [sp, #20]
+ 8001080:	9b05      	ldr	r3, [sp, #20]
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
- 8001132:	2301      	movs	r3, #1
-	GPIO_InitStruct.Pin = Button_Pin_0;
- 8001134:	9006      	str	r0, [sp, #24]
-	HAL_GPIO_Init(Button_Pin_0_Port, &GPIO_InitStruct);
- 8001136:	4638      	mov	r0, r7
+ 8001082:	2301      	movs	r3, #1
+	GPIO_InitStruct.Pin = _Encoder_Pin_0;
+ 8001084:	9006      	str	r0, [sp, #24]
+	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
+ 8001086:	4638      	mov	r0, r7
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
- 8001138:	9207      	str	r2, [sp, #28]
- 800113a:	9201      	str	r2, [sp, #4]
+ 8001088:	9207      	str	r2, [sp, #28]
+ 800108a:	9201      	str	r2, [sp, #4]
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
- 800113c:	9308      	str	r3, [sp, #32]
-	HAL_GPIO_Init(Button_Pin_0_Port, &GPIO_InitStruct);
- 800113e:	f7ff f8b9 	bl	80002b4 <HAL_GPIO_Init>
-	HAL_GPIO_Init(Button_Pin_1_Port, &GPIO_InitStruct);
- 8001142:	a906      	add	r1, sp, #24
- 8001144:	4640      	mov	r0, r8
-	GPIO_InitStruct.Pin = Button_Pin_1;
- 8001146:	f8cd 9018 	str.w	r9, [sp, #24]
-	HAL_GPIO_Init(Button_Pin_1_Port, &GPIO_InitStruct);
- 800114a:	f7ff f8b3 	bl	80002b4 <HAL_GPIO_Init>
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
- 800114e:	7823      	ldrb	r3, [r4, #0]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1 = Button_Pin_1;
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0_Port = Button_Pin_0_Port;
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1_Port = Button_Pin_1_Port;
-	Encoder_Array[Attached_Encoders]._Encoder_Time_Stamp = 0;
- 8001150:	9a01      	ldr	r2, [sp, #4]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
- 8001152:	fb0b f303 	mul.w	r3, fp, r3
- 8001156:	eb0a 0603 	add.w	r6, sl, r3
+ 800108c:	9308      	str	r3, [sp, #32]
+	HAL_GPIO_Init(_Encoder_Pin_0_Port, &GPIO_InitStruct);
+ 800108e:	f7ff f911 	bl	80002b4 <HAL_GPIO_Init>
+	HAL_GPIO_Init(_Encoder_Pin_1_Port, &GPIO_InitStruct);
+ 8001092:	a906      	add	r1, sp, #24
+ 8001094:	4640      	mov	r0, r8
+	GPIO_InitStruct.Pin = _Encoder_Pin_1;
+ 8001096:	f8cd 9018 	str.w	r9, [sp, #24]
+	HAL_GPIO_Init(_Encoder_Pin_1_Port, &GPIO_InitStruct);
+ 800109a:	f7ff f90b 	bl	80002b4 <HAL_GPIO_Init>
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+ 800109e:	7823      	ldrb	r3, [r4, #0]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1 = _Encoder_Pin_1;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port = _Encoder_Pin_0_Port;
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port = _Encoder_Pin_1_Port;
+	Encoder_Array[Attached_Encoders].Encoder_Time_Stamp = 0;
+ 80010a0:	9a01      	ldr	r2, [sp, #4]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+ 80010a2:	fb0b f303 	mul.w	r3, fp, r3
+ 80010a6:	eb0a 0603 	add.w	r6, sl, r3
 
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0__State = HAL_GPIO_ReadPin(
- 800115a:	4629      	mov	r1, r5
-	Encoder_Array[Attached_Encoders]._Encoder_Time_Stamp = 0;
- 800115c:	6132      	str	r2, [r6, #16]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1 = Button_Pin_1;
- 800115e:	f8a6 9002 	strh.w	r9, [r6, #2]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0_Port = Button_Pin_0_Port;
- 8001162:	6077      	str	r7, [r6, #4]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1_Port = Button_Pin_1_Port;
- 8001164:	f8c6 8008 	str.w	r8, [r6, #8]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0__State = HAL_GPIO_ReadPin(
- 8001168:	4638      	mov	r0, r7
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0 = Button_Pin_0;
- 800116a:	f82a 5003 	strh.w	r5, [sl, r3]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0__State = HAL_GPIO_ReadPin(
- 800116e:	f7ff f981 	bl	8000474 <HAL_GPIO_ReadPin>
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_0_Port,
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_0);
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
+ 80010aa:	4629      	mov	r1, r5
+	Encoder_Array[Attached_Encoders].Encoder_Time_Stamp = 0;
+ 80010ac:	6132      	str	r2, [r6, #16]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1 = _Encoder_Pin_1;
+ 80010ae:	f8a6 9002 	strh.w	r9, [r6, #2]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port = _Encoder_Pin_0_Port;
+ 80010b2:	6077      	str	r7, [r6, #4]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port = _Encoder_Pin_1_Port;
+ 80010b4:	f8c6 8008 	str.w	r8, [r6, #8]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
+ 80010b8:	4638      	mov	r0, r7
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0 = _Encoder_Pin_0;
+ 80010ba:	f82a 5003 	strh.w	r5, [sl, r3]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
+ 80010be:	f7ff f9d9 	bl	8000474 <HAL_GPIO_ReadPin>
+			Encoder_Array[Attached_Encoders].Encoder_Pin_0_Port,
+			Encoder_Array[Attached_Encoders].Encoder_Pin_0);
 
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1__State = HAL_GPIO_ReadPin(
- 8001172:	7825      	ldrb	r5, [r4, #0]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_0__State = HAL_GPIO_ReadPin(
- 8001174:	7330      	strb	r0, [r6, #12]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1__State = HAL_GPIO_ReadPin(
- 8001176:	fb0b a505 	mla	r5, fp, r5, sl
- 800117a:	8869      	ldrh	r1, [r5, #2]
- 800117c:	68a8      	ldr	r0, [r5, #8]
- 800117e:	f7ff f979 	bl	8000474 <HAL_GPIO_ReadPin>
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_1_Port,
-			Encoder_Array[Attached_Encoders]._Encoder_Pin_1);
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1__State = HAL_GPIO_ReadPin(
+ 80010c2:	7825      	ldrb	r5, [r4, #0]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_0__State = HAL_GPIO_ReadPin(
+ 80010c4:	7330      	strb	r0, [r6, #12]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1__State = HAL_GPIO_ReadPin(
+ 80010c6:	fb0b a505 	mla	r5, fp, r5, sl
+ 80010ca:	8869      	ldrh	r1, [r5, #2]
+ 80010cc:	68a8      	ldr	r0, [r5, #8]
+ 80010ce:	f7ff f9d1 	bl	8000474 <HAL_GPIO_ReadPin>
+			Encoder_Array[Attached_Encoders].Encoder_Pin_1_Port,
+			Encoder_Array[Attached_Encoders].Encoder_Pin_1);
 
 
 	Attached_Encoders++;
- 8001182:	7823      	ldrb	r3, [r4, #0]
-	Encoder_Array[Attached_Encoders]._Encoder_Pin_1__State = HAL_GPIO_ReadPin(
- 8001184:	7368      	strb	r0, [r5, #13]
+ 80010d2:	7823      	ldrb	r3, [r4, #0]
+	Encoder_Array[Attached_Encoders].Encoder_Pin_1__State = HAL_GPIO_ReadPin(
+ 80010d4:	7368      	strb	r0, [r5, #13]
 	Attached_Encoders++;
- 8001186:	3301      	adds	r3, #1
- 8001188:	b2db      	uxtb	r3, r3
+ 80010d6:	3301      	adds	r3, #1
+ 80010d8:	b2db      	uxtb	r3, r3
+
 	if (Attached_Encoders > MAX_ENCODERS)
- 800118a:	2b03      	cmp	r3, #3
+ 80010da:	2b03      	cmp	r3, #3
 	Attached_Encoders++;
- 800118c:	7023      	strb	r3, [r4, #0]
+ 80010dc:	7023      	strb	r3, [r4, #0]
 	if (Attached_Encoders > MAX_ENCODERS)
- 800118e:	d903      	bls.n	8001198 <Encoder_Attach+0xcc>
+ 80010de:	d903      	bls.n	80010e8 <Encoder_Attach+0xcc>
 	{
 		_Error_Handler(__FILE__, __LINE__);
- 8001190:	2184      	movs	r1, #132	; 0x84
- 8001192:	4806      	ldr	r0, [pc, #24]	; (80011ac <Encoder_Attach+0xe0>)
- 8001194:	f7ff ff40 	bl	8001018 <_Error_Handler>
+ 80010e0:	214e      	movs	r1, #78	; 0x4e
+ 80010e2:	4806      	ldr	r0, [pc, #24]	; (80010fc <Encoder_Attach+0xe0>)
+ 80010e4:	f7ff ff98 	bl	8001018 <_Error_Handler>
 		//Error
 	}
-	return (Attached_Encoders - 1);
- 8001198:	7820      	ldrb	r0, [r4, #0]
- 800119a:	3801      	subs	r0, #1
+	return (Attached_Encoders - 1);//return encoder ID
+ 80010e8:	7820      	ldrb	r0, [r4, #0]
+ 80010ea:	3801      	subs	r0, #1
 }
- 800119c:	b2c0      	uxtb	r0, r0
- 800119e:	b00b      	add	sp, #44	; 0x2c
- 80011a0:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
- 80011a4:	40021000 	.word	0x40021000
- 80011a8:	20000030 	.word	0x20000030
- 80011ac:	0800244d 	.word	0x0800244d
- 80011b0:	20000034 	.word	0x20000034
+ 80010ec:	b2c0      	uxtb	r0, r0
+ 80010ee:	b00b      	add	sp, #44	; 0x2c
+ 80010f0:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 80010f4:	40021000 	.word	0x40021000
+ 80010f8:	20000030 	.word	0x20000030
+ 80010fc:	0800244d 	.word	0x0800244d
+ 8001100:	20000034 	.word	0x20000034
+
+08001104 <Encoder_Scan>:
+
+
+void Encoder_Scan()
+{
+ 8001104:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+
+	for (uint8_t Index = 0; Index < Attached_Encoders; Index++)
+ 8001108:	2700      	movs	r7, #0
+ 800110a:	f8df 80a4 	ldr.w	r8, [pc, #164]	; 80011b0 <Encoder_Scan+0xac>
+	{
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_0_Port,
+ 800110e:	4e27      	ldr	r6, [pc, #156]	; (80011ac <Encoder_Scan+0xa8>)
+	for (uint8_t Index = 0; Index < Attached_Encoders; Index++)
+ 8001110:	f898 3000 	ldrb.w	r3, [r8]
+ 8001114:	b2fd      	uxtb	r5, r7
+ 8001116:	42ab      	cmp	r3, r5
+ 8001118:	d801      	bhi.n	800111e <Encoder_Scan+0x1a>
+				Encoder_Array[Index].Encoder_Time_Stamp = HAL_GetTick();
+			}
+		}
+	}
+
+}
+ 800111a:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_0_Port,
+ 800111e:	2318      	movs	r3, #24
+ 8001120:	436b      	muls	r3, r5
+ 8001122:	18f4      	adds	r4, r6, r3
+ 8001124:	5af1      	ldrh	r1, [r6, r3]
+ 8001126:	6860      	ldr	r0, [r4, #4]
+ 8001128:	f7ff f9a4 	bl	8000474 <HAL_GPIO_ReadPin>
+				!= Encoder_Array[Index].Encoder_Pin_0__State)
+ 800112c:	7b23      	ldrb	r3, [r4, #12]
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_0_Port,
+ 800112e:	4298      	cmp	r0, r3
+ 8001130:	d017      	beq.n	8001162 <Encoder_Scan+0x5e>
+					!Encoder_Array[Index].Encoder_Pin_0__State;
+ 8001132:	2b00      	cmp	r3, #0
+ 8001134:	bf0c      	ite	eq
+ 8001136:	2301      	moveq	r3, #1
+ 8001138:	2300      	movne	r3, #0
+ 800113a:	7323      	strb	r3, [r4, #12]
+			if (Encoder_Array[Index].Encoder_Pin_0__State
+ 800113c:	d111      	bne.n	8001162 <Encoder_Scan+0x5e>
+					&& !Encoder_Array[Index].Encoder_Pin_1__State)
+ 800113e:	7b63      	ldrb	r3, [r4, #13]
+ 8001140:	b97b      	cbnz	r3, 8001162 <Encoder_Scan+0x5e>
+				if (HAL_GetTick() - Encoder_Array[Index].Encoder_Time_Stamp
+ 8001142:	f7ff f845 	bl	80001d0 <HAL_GetTick>
+ 8001146:	6923      	ldr	r3, [r4, #16]
+ 8001148:	1ac0      	subs	r0, r0, r3
+					Encoder_Array[Index].Encoder_Count += 1;
+ 800114a:	8aa3      	ldrh	r3, [r4, #20]
+				if (HAL_GetTick() - Encoder_Array[Index].Encoder_Time_Stamp
+ 800114c:	2803      	cmp	r0, #3
+					Encoder_Array[Index].Encoder_Count += 1;
+ 800114e:	bf8c      	ite	hi
+ 8001150:	3301      	addhi	r3, #1
+					Encoder_Array[Index].Encoder_Count += 5;
+ 8001152:	3305      	addls	r3, #5
+ 8001154:	82a3      	strh	r3, [r4, #20]
+				Encoder_Array[Index].Encoder_Time_Stamp = HAL_GetTick();
+ 8001156:	f7ff f83b 	bl	80001d0 <HAL_GetTick>
+ 800115a:	2318      	movs	r3, #24
+ 800115c:	fb03 6305 	mla	r3, r3, r5, r6
+ 8001160:	6118      	str	r0, [r3, #16]
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_1_Port,
+ 8001162:	2418      	movs	r4, #24
+ 8001164:	fb04 6405 	mla	r4, r4, r5, r6
+ 8001168:	8861      	ldrh	r1, [r4, #2]
+ 800116a:	68a0      	ldr	r0, [r4, #8]
+ 800116c:	f7ff f982 	bl	8000474 <HAL_GPIO_ReadPin>
+				!= Encoder_Array[Index].Encoder_Pin_1__State)
+ 8001170:	7b63      	ldrb	r3, [r4, #13]
+		if (HAL_GPIO_ReadPin(Encoder_Array[Index].Encoder_Pin_1_Port,
+ 8001172:	4298      	cmp	r0, r3
+ 8001174:	d018      	beq.n	80011a8 <Encoder_Scan+0xa4>
+					!Encoder_Array[Index].Encoder_Pin_1__State;
+ 8001176:	2b00      	cmp	r3, #0
+ 8001178:	bf0c      	ite	eq
+ 800117a:	2301      	moveq	r3, #1
+ 800117c:	2300      	movne	r3, #0
+ 800117e:	7363      	strb	r3, [r4, #13]
+			if (Encoder_Array[Index].Encoder_Pin_1__State
+ 8001180:	d112      	bne.n	80011a8 <Encoder_Scan+0xa4>
+					&& !Encoder_Array[Index].Encoder_Pin_0__State)
+ 8001182:	7b23      	ldrb	r3, [r4, #12]
+ 8001184:	b983      	cbnz	r3, 80011a8 <Encoder_Scan+0xa4>
+				if (HAL_GetTick() - Encoder_Array[Index].Encoder_Time_Stamp
+ 8001186:	f7ff f823 	bl	80001d0 <HAL_GetTick>
+ 800118a:	6923      	ldr	r3, [r4, #16]
+ 800118c:	1ac0      	subs	r0, r0, r3
+					Encoder_Array[Index].Encoder_Count -= 1;
+ 800118e:	8aa3      	ldrh	r3, [r4, #20]
+				if (HAL_GetTick() - Encoder_Array[Index].Encoder_Time_Stamp
+ 8001190:	2803      	cmp	r0, #3
+					Encoder_Array[Index].Encoder_Count -= 1;
+ 8001192:	bf8c      	ite	hi
+ 8001194:	f103 33ff 	addhi.w	r3, r3, #4294967295	; 0xffffffff
+					Encoder_Array[Index].Encoder_Count -= 5;
+ 8001198:	3b05      	subls	r3, #5
+ 800119a:	82a3      	strh	r3, [r4, #20]
+				Encoder_Array[Index].Encoder_Time_Stamp = HAL_GetTick();
+ 800119c:	f7ff f818 	bl	80001d0 <HAL_GetTick>
+ 80011a0:	2318      	movs	r3, #24
+ 80011a2:	fb03 6505 	mla	r5, r3, r5, r6
+ 80011a6:	6128      	str	r0, [r5, #16]
+ 80011a8:	3701      	adds	r7, #1
+ 80011aa:	e7b1      	b.n	8001110 <Encoder_Scan+0xc>
+ 80011ac:	20000034 	.word	0x20000034
+ 80011b0:	20000030 	.word	0x20000030
 
 080011b4 <Encoder_Get_Count>:
 
-int16_t Encoder_Get_Count(uint8_t Encoder)
+
+int16_t Encoder_Get_Count(Encoder_t Encoder)
 {
  80011b4:	b510      	push	{r4, lr}
 	if (Encoder > Attached_Encoders)
