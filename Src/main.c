@@ -53,9 +53,6 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
-Encoder_t MY_Encoder_X;
-Encoder_t MY_Encoder_Y;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,9 +102,21 @@ int main(void)
 	MX_I2C1_Init();
 	/* USER CODE BEGIN 2 */
 
-    MY_Encoder_Y = Encoder_Attach(GPIO_PIN_0, GPIOB, GPIO_PIN_1, GPIOB);
+	Encoder_Struct_t MY_Encoder_Y;
+	MY_Encoder_Y.Encoder_Pin_0 = GPIO_PIN_0;
+	MY_Encoder_Y.Encoder_Pin_0_Port = GPIOB;
+	MY_Encoder_Y.Encoder_Pin_1 = GPIO_PIN_1;
+	MY_Encoder_Y.Encoder_Pin_1_Port = GPIOB;
+	Encoder_Attach(&MY_Encoder_Y);
 
-	MY_Encoder_X = Encoder_Attach(GPIO_PIN_8, GPIOB, GPIO_PIN_3, GPIOB);
+
+	Encoder_Struct_t MY_Encoder_X;
+	MY_Encoder_X.Encoder_Pin_0 = GPIO_PIN_0;
+	MY_Encoder_X.Encoder_Pin_0_Port = GPIOB;
+	MY_Encoder_X.Encoder_Pin_1 = GPIO_PIN_1;
+	MY_Encoder_X.Encoder_Pin_1_Port = GPIOB;
+	Encoder_Attach(&MY_Encoder_X);
+
 
 	ssd1306_Init();
 
@@ -128,8 +137,8 @@ int main(void)
 		/* USER CODE BEGIN 3 */
 
 		int16_t temp1=0, temp2=0;
-		temp1 = Encoder_Get_Count(MY_Encoder_X);
-		temp2 = Encoder_Get_Count(MY_Encoder_Y);
+		temp1 = Encoder_Get_Count(&MY_Encoder_X);
+		temp2 = Encoder_Get_Count(&MY_Encoder_Y);
 
 		char temp[5];
 		ssd1306_Fill(Black);
