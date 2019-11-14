@@ -13,11 +13,11 @@
 // using gpio_read_bit instead of digitalRead gives about 4x more speed http://forums.leaflabs.com/topic.php?id=1107
 #define MAX_ENCODERS 2
 
-static Encoder_Struct_t *Encoder_Struct_PTR_Array[MAX_ENCODERS];
+static Encoder_Struct_t* Encoder_Struct_PTR_Array[MAX_ENCODERS];
 
 static uint8_t Attached_Encoders = 0;
 
-uint8_t Encoder_Attach(Encoder_Struct_t *Encoder_Struct_PTR)
+uint8_t Encoder_Attach(Encoder_Struct_t* Encoder_Struct_PTR)
     {
     //init GPIOs as input
 
@@ -42,6 +42,7 @@ uint8_t Encoder_Attach(Encoder_Struct_t *Encoder_Struct_PTR)
     HAL_GPIO_Init(Encoder_Struct_PTR->Encoder_Pin_1_Port, &GPIO_InitStruct);
 
     Encoder_Struct_PTR->Encoder_Time_Stamp = 0;
+    Encoder_Struct_PTR->Encoder_Count = 0;
 
     Encoder_Struct_PTR->Encoder_Pin_0__State = HAL_GPIO_ReadPin(
 	    Encoder_Struct_PTR->Encoder_Pin_0_Port,
@@ -77,13 +78,17 @@ void Encoder_Scan()
 	    PTR->Encoder_Pin_0__State = !PTR->Encoder_Pin_0__State;
 	    if (PTR->Encoder_Pin_0__State && !PTR->Encoder_Pin_1__State)
 		{
-		if (HAL_GetTick() - PTR->Encoder_Time_Stamp > 3)
+		if (HAL_GetTick() - PTR->Encoder_Time_Stamp > 10)
 		    {
 		    PTR->Encoder_Count += 1;
 		    }
+		else if (HAL_GetTick() - PTR->Encoder_Time_Stamp > 5)
+		    {
+		    PTR->Encoder_Count += 10;
+		    }
 		else
 		    {
-		    PTR->Encoder_Count += 5;
+		    PTR->Encoder_Count += 50;
 		    }
 
 		PTR->Encoder_Time_Stamp = HAL_GetTick();
@@ -95,13 +100,17 @@ void Encoder_Scan()
 	    PTR->Encoder_Pin_1__State = !PTR->Encoder_Pin_1__State;
 	    if (PTR->Encoder_Pin_1__State && !PTR->Encoder_Pin_0__State)
 		{
-		if (HAL_GetTick() - PTR->Encoder_Time_Stamp > 3)
+		if (HAL_GetTick() - PTR->Encoder_Time_Stamp > 10)
 		    {
 		    PTR->Encoder_Count -= 1;
 		    }
+		else if (HAL_GetTick() - PTR->Encoder_Time_Stamp > 5)
+		    {
+		    PTR->Encoder_Count -= 10;
+		    }
 		else
 		    {
-		    PTR->Encoder_Count -= 5;
+		    PTR->Encoder_Count -= 50;
 		    }
 		PTR->Encoder_Time_Stamp = HAL_GetTick();
 		}
@@ -110,7 +119,7 @@ void Encoder_Scan()
 
     }
 
-int16_t Encoder_Get_Count(Encoder_Struct_t *PTR)
+int16_t Encoder_Get_Count(Encoder_Struct_t* PTR)
     {
     if (PTR == NULL)
 	{
@@ -119,7 +128,8 @@ int16_t Encoder_Get_Count(Encoder_Struct_t *PTR)
     return PTR->Encoder_Count;
     }
 
-void Encoder_Reset_Count(Encoder_Struct_t *PTR)
+/* to reset*/
+void Encoder_Set_Count(Encoder_Struct_t* PTR, int16_t count)
     {
     if (PTR == NULL)
 	{
@@ -127,7 +137,7 @@ void Encoder_Reset_Count(Encoder_Struct_t *PTR)
 	}
     else
 	{
-	PTR->Encoder_Count = 0;
+	PTR->Encoder_Count = count;
 	}
     }
 
